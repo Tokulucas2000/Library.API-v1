@@ -7,5 +7,28 @@ namespace Library.API.Controllers
     [ApiController]
     public class BookController : ControllerBase
     {
+        [HttpGet]
+        public IActionResult GetAll() 
+        {
+            return Ok("Returning all books");
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetById()
+        {
+            return Ok("Returning all books");
+        }
+
+        [HttpPost]
+        public IActionResult Create()
+        {
+            return CreatedAtAction(nameof(GetById), new { id = 1 }, "Book created successfully");
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            return NoContent(); // Assuming deletion is successful
+        }
     }
 }
