@@ -32,7 +32,7 @@ namespace Library.API.Data.Repository
             var findBook = await _context.Books.FirstOrDefaultAsync(b => b.Id == id && !b.Deleted);
             if (findBook == null)
             {
-                return null; // or throw an exception based on your error handling strategy
+                throw new Exception("The book does not exist or already has been deleted");  // or throw an exception based on your error handling strategy
             }
             var book = new GetBookDTO
             {

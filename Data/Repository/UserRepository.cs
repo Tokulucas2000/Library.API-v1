@@ -37,7 +37,7 @@ namespace Library.API.Data.Repository
                 .FirstOrDefaultAsync();
             if (users == null)
             {
-                throw new Exception("A user does not exist or already deleted"); 
+                throw new Exception("A user does not exist or already has been deleted"); 
             }
             return users;
         }
