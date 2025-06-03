@@ -5,9 +5,9 @@ namespace Library.API.Interface
 {
     public interface IBookRepository
     {
-        Task<IEnumerable<Book>> GetAllBooksAsync();
-        Task<Book?> GetBookByIdAsync(int id);
-        Task<Book> CreateBookAsync(CreateBookDTO createBookDTO);
-        Task<bool> DeleteBookAsync(int id);
+        Task<List<GetBookDTO>> GetAllBooksAsync();
+        Task<GetBookDTO?> GetBookByIdAsync(int id);
+        Task<GetBookDTO> CreateBookAsync(CreateBookDTO createBookDTO);
+        void DeleteBookAsync(int id);
     }
 }

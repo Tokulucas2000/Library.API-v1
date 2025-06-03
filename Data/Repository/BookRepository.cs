@@ -13,29 +13,86 @@ namespace Library.API.Data.Repository
             _context = context;
         }
 
-        public async Task<IEnumerable<Book>> GetAllBooksAsync()
+        public async Task<List<GetBookDTO>> GetAllBooksAsync()
         {
-            return await _context.Books.ToListAsync();
+            var books = await _context.Books.Where(b => !b.Deleted).ToListAsync();
+            var listBooks = books.Select(b => new GetBookDTO
+            {
+                Id = b.Id,
+                Title = b.Title,
+                Author = b.Author,
+                ISBN = b.ISBN,
+                PublishedDate = b.PublishedDate.ToShortDateString()
+            }).ToList();
+            return listBooks;
         }
 
-        public async Task<Book?> GetBookByIdAsync(int id)
+        public async Task<GetBookDTO?> GetBookByIdAsync(int id)
         {
-            var book = await _context.Books.FindAsync(id);
-            if (book == null)
+            var findBook = await _context.Books.FirstOrDefaultAsync(b => b.Id == id && !b.Deleted);
+            if (findBook == null)
             {
                 return null; // or throw an exception based on your error handling strategy
             }
-            return await _context.Books.Where(b => b.Id == id).FirstOrDefaultAsync();
+            var book = new GetBookDTO
+            {
+                Id = findBook.Id,
+                Title = findBook.Title,
+                Author = findBook.Author,
+                ISBN = findBook.ISBN,
+                PublishedDate = findBook.PublishedDate.ToShortDateString()
+            };
+            return book;
         }
 
-        public Task<Book> CreateBookAsync(CreateBookDTO createBookDTO)
+        public async Task<GetBookDTO> CreateBookAsync(CreateBookDTO createBookDTO)
         {
-            throw new NotImplementedException();
-        }
+            try
+            {
+                if (createBookDTO == null)
+                {
+                    throw new ArgumentNullException(nameof(createBookDTO), "CreateBookDTO cannot be null.");
+                }
 
-        public Task<bool> DeleteBookAsync(int id)
+                var validateBook = _context.Books.Any(b => b.ISBN == createBookDTO.ISBN && !b.Deleted);
+                if (validateBook)
+                {
+                    throw new Exception("A book with the same ISBN already exists.");
+                }
+                var createBook = new Book
+                {
+                    Title = createBookDTO.Title,
+                    Author = createBookDTO.Author,
+                    ISBN = createBookDTO.ISBN,
+                    PublishedDate = createBookDTO.PublishedDate,
+                };
+                await _context.Books.AddAsync(createBook);
+                await _context.SaveChangesAsync();
+                var newBook = new GetBookDTO
+                {
+                    Id = createBook.Id,
+                    Title = createBook.Title,
+                    Author = createBook.Author,
+                    ISBN = createBook.ISBN,
+                    PublishedDate = createBook.PublishedDate.ToShortDateString()
+                };
+                return newBook;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public void DeleteBookAsync(int id)
         {
-            throw new NotImplementedException();
+            var findBook = _context.Books.FirstOrDefault(b => b.Id == id && !b.Deleted);
+            if (findBook == null)
+            {
+                throw new InvalidOperationException("Book not found or already deleted.");
+            }
+            findBook.Deleted = true;
+            _context.Update(findBook);
+            _context.SaveChanges();
         }
 
     }
