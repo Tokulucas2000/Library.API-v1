@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\DTO\Book\" />
     <Folder Include="Models\DTO\Circulation\" />
     <Folder Include="Models\DTO\User\" />
   </ItemGroup>

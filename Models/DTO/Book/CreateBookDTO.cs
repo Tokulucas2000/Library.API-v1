@@ -1,9 +1,7 @@
-﻿namespace Library.API.Models.Entities
+﻿namespace Library.API.Models.DTO.Book
 {
-    public class Book
+    public class CreateBookDTO
     {
-        public int Id { get; set; }
-        public bool Deleted { get; set; } = false;
         public required string Title { get; set; }
         public required string Author { get; set; }
         public string? ISBN { get; set; }

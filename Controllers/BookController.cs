@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Library.API.Models.DTO.Book;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.API.Controllers
@@ -20,7 +21,7 @@ namespace Library.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create()
+        public IActionResult Create(CreateBookDTO createBookDTO)
         {
             return CreatedAtAction(nameof(GetById), new { id = 1 }, "Book created successfully");
         }
