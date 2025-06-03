@@ -5,7 +5,7 @@ using Scalar.AspNetCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<LibraryDbContext>(options => 
-    options.UseSqlServer(builder.Configuration.GetConnectionString("LibraryDbContext")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("LibraryConnection")));
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
