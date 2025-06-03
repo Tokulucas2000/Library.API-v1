@@ -69,7 +69,7 @@ namespace Library.API.Controllers
         {
             try
             {
-                _bookRepository.DeleteBookAsync(id);
+                _bookRepository.DeleteBook(id);
                 return Ok("Book deleted with sucess!"); 
             }
             catch (Exception ex)

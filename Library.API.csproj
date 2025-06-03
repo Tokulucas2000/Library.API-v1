@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <Folder Include="Models\DTO\Circulation\" />
-    <Folder Include="Models\DTO\User\" />
   </ItemGroup>
 
 </Project>

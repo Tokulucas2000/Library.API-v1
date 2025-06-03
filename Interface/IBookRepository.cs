@@ -8,6 +8,6 @@ namespace Library.API.Interface
         Task<List<GetBookDTO>> GetAllBooksAsync();
         Task<GetBookDTO?> GetBookByIdAsync(int id);
         Task<GetBookDTO> CreateBookAsync(CreateBookDTO createBookDTO);
-        void DeleteBookAsync(int id);
+        void DeleteBook(int id);
     }
 }

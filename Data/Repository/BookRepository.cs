@@ -83,7 +83,7 @@ namespace Library.API.Data.Repository
                 throw new Exception(ex.Message);
             }
         }
-        public void DeleteBookAsync(int id)
+        public void DeleteBook(int id)
         {
             var findBook = _context.Books.FirstOrDefault(b => b.Id == id && !b.Deleted);
             if (findBook == null)
